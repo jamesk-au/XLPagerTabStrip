@@ -224,7 +224,11 @@ public class PagerTabStripViewController: UIViewController, UIScrollViewDelegate
                     childController.beginAppearanceTransition(true, animated: false)
                     childController.view.frame = CGRectMake(offsetForChildIndex(index), 0, CGRectGetWidth(view.bounds), CGRectGetHeight(containerView.bounds))
                     childController.view.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+                    childController.view.translatesAutoresizingMaskIntoConstraints = false
                     containerView.addSubview(childController.view)
+                    let viewBindings = ["childView": childController.view]
+                    containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[childView]|", options: [], metrics: nil, views: viewBindings))
+                    containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[childView]|", options: [], metrics: nil, views: viewBindings))
                     childController.didMoveToParentViewController(self)
                     childController.endAppearanceTransition()
                 }
